@@ -15,5 +15,4 @@ Aplikasi berbasis Web untuk mengelola stok barang masuk dan keluar, mencatat sup
 4. Buka di browser.
 
 ## Akun Demo
-- **Admin:** admin@gmail.com / admin123
-- **Staff:** user@gmail.com / user123
+- **Admin:** admin@admin / admin
