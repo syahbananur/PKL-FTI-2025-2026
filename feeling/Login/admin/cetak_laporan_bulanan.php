@@ -1,0 +1,109 @@
+<?php
+session_start();
+require_once '../config/config.php';
+if (!isset($_SESSION['id_pengguna'])) { header('Location: ../index.php'); exit(); }
+
+$bulan = isset($_GET['bulan']) ? $_GET['bulan'] : date('m');
+$tahun = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
+
+// QUERY
+$query = "SELECT b.nama_barang, s.nama_satuan, b.stok_awal AS stok_master,
+          (SELECT COALESCE(SUM(jumlah_masuk),0) FROM tabel_barang_masuk WHERE id_barang=b.id_barang AND MONTH(tanggal_masuk)='$bulan' AND YEAR(tanggal_masuk)='$tahun') as masuk_bln,
+          (SELECT COALESCE(SUM(jumlah_keluar),0) FROM tabel_barang_keluar WHERE id_barang=b.id_barang AND MONTH(tanggal_keluar)='$bulan' AND YEAR(tanggal_keluar)='$tahun') as keluar_bln
+          FROM tabel_barang b
+          JOIN tabel_satuan_unit s ON b.id_satuan = s.id_satuan
+          ORDER BY b.nama_barang ASC";
+$result = mysqli_query($koneksi, $query);
+
+$bulanIndo = ['01'=>'Januari','02'=>'Februari','03'=>'Maret','04'=>'April','05'=>'Mei','06'=>'Juni','07'=>'Juli','08'=>'Agustus','09'=>'September','10'=>'Oktober','11'=>'November','12'=>'Desember'];
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Cetak Bulanan</title>
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; color: #000; margin: 20px; }
+        .kop-surat { width: 100%; height: auto; display: block; margin-bottom: 10px; padding-bottom: 5px; }
+
+        h2 { text-align: center; margin: 5px 0; text-transform: uppercase; }
+        h3 { text-align: right; font-weight: normal; margin-top: 10px; font-size: 12pt; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10pt; } /* Font agak dikecilkan biar muat */
+        th, td { border: 1px solid #000; padding: 4px 6px; }
+        th { background: #f0f0f0; text-align: center; font-weight: bold; }
+        
+        .angka { text-align: right; }
+        .bold { font-weight: bold; }
+        td:nth-child(1), td:nth-child(3) { text-align: center; }
+        
+        .tanda-tangan { float: right; text-align: center; width: 200px; margin-top: 30px; }
+
+        @media print {
+            @page { margin: 0; size: auto; }
+            body { margin: 0; padding: 20px; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="window.print()" class="no-print" style="margin-bottom: 20px; padding: 10px; cursor: pointer;">🖨️ Cetak</button>
+
+    <img src="../assets/kop.png" alt="Kop Surat" class="kop-surat">
+
+    <h2>REKAPITULASI STOK BULANAN</h2>
+    <p style="text-align:center;">Periode: <?php echo $bulanIndo[$bulan] . " " . $tahun; ?></p>
+    
+    <h3>Banjarbaru, <?php echo date('d F Y'); ?></h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width:5%;">No</th> 
+                <th>Nama Barang</th> 
+                <th style="width:8%;">Satuan</th>
+                <th style="width:12%;">Stok Awal</th> 
+                <th style="width:12%;">Masuk (+)</th> 
+                <th style="width:12%;">Keluar (-)</th> 
+                <th style="width:12%;">Stok Akhir</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            // DEFINISI FUNGSI DI LUAR LOOP
+            function fp($n) {
+                return (floor($n) == $n) ? number_format($n, 0, ',', '.') : rtrim(number_format($n, 2, ',', '.'), '0');
+            }
+
+            $no=1; 
+            while($row = mysqli_fetch_assoc($result)) { 
+                $stok_awal = $row['stok_master'];
+                $akhir     = $stok_awal + $row['masuk_bln'] - $row['keluar_bln']; 
+            ?>
+            <tr>
+                <td><?php echo $no++; ?></td>
+                <td><?php echo htmlspecialchars($row['nama_barang']); ?></td>
+                <td><?php echo htmlspecialchars($row['nama_satuan']); ?></td>
+                
+                <td class="angka"><?php echo fp($stok_awal); ?></td>
+                
+                <td class="angka"><?php echo fp($row['masuk_bln']); ?></td>
+                <td class="angka"><?php echo fp($row['keluar_bln']); ?></td>
+                <td class="angka bold"><?php echo fp($akhir); ?></td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+
+    <div class="tanda-tangan">
+        <p>Banjarbaru, <?php echo date('d-m-Y'); ?></p>
+        <br>
+        <p>Dilaporkan Oleh,</p>
+        <br><br><br>
+        <p><strong>( <?php echo $_SESSION['name']; ?> )</strong><br>Admin Gudang</p>
+    </div>
+
+</body>
+</html>

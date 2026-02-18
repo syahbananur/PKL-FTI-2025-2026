@@ -1,0 +1,333 @@
+/*
+ * ========================================
+ * File: /assets/admin_style.css
+ * CSS Terpusat untuk Halaman Admin
+ * ========================================
+ */
+
+/* === 1. DASAR HALAMAN === */
+body {
+    background-color: #f4f4f4; /* Warna latar abu-abu netral */
+    font-family: 'Poppins', sans-serif; /* Font yang Anda pakai di login */
+    margin: 0; /* Menghilangkan margin default browser */
+    padding: 0; /* Menghilangkan padding default browser */
+    color: #333; /* Warna teks utama */
+}
+
+/* === 2. WADAH UTAMA === */
+/* Ini adalah kotak putih besar yang membungkus konten */
+.dashboard-container,
+.container { /* Kita pakai .container juga untuk form */
+    width: 90%; /* Lebar 90% dari layar */
+    max-width: 1200px; /* Lebar maksimum (agar tidak terlalu lebar di layar besar) */
+    margin: 30px auto; /* 30px jarak atas/bawah, 'auto' untuk tengah horizontal */
+    background: #ffffff; /* Latar belakang putih */
+    padding: 30px; /* Jarak 30px di dalam kotak */
+    border-radius: 10px; /* Sudut melengkung */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08); /* Efek bayangan halus */
+}
+
+/* === 3. HEADER ADMIN (Halo, Admin!) === */
+.admin-header {
+    display: flex; /* Membuat 'Halo' dan 'Logout' sejajar */
+    justify-content: space-between; /* 'Halo' di kiri, 'Logout' di kanan */
+    align-items: center; /* Menengahkan secara vertikal */
+    border-bottom: 1px solid #dee2e6; /* Garis bawah halus */
+    padding-bottom: 15px; /* Jarak ke garis bawah */
+    margin-bottom: 25px; /* Jarak ke konten di bawahnya */
+}
+
+.logo {
+    font-size: 30px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    /* margin-right: auto; */
+}
+
+.logo img {
+    width: 130px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.admin-header h1 {
+    font-size: 1.7em; /* Ukuran font 'Halo, Admin!' */
+    color: #212529; /* Warna teks gelap */
+    margin: 0; /* Hapus margin default h1 */
+}
+
+.logout-btn {
+    background-color: #dc3545; /* Merah */
+    color: white; /* Teks putih */
+    padding: 10px 18px; /* Ukuran tombol */
+    text-decoration: none; /* Hapus garis bawah link */
+    border-radius: 5px; /* Sudut tombol */
+    font-weight: 500; /* Ketebalan font */
+    transition: background-color 0.2s ease; /* Efek hover halus */
+}
+.logout-btn:hover {
+    background-color: #c82333; /* Merah lebih gelap saat di-hover */
+}
+
+/* === 4. SUBJUDUL (Menu Navigasi, Laporan, Form) === */
+.admin-nav h2, .laporan-stok h2, .laporan-kritis h2,
+.container h1 { /* Ini untuk h1 di form (Tambah Barang, Edit, dll) */
+     font-size: 1.4em;
+     color: #495057;
+     margin-top: 0; /* Hapus margin atas default */
+     margin-bottom: 18px; /* Jarak ke bawah */
+     font-weight: 600; /* Sedikit tebal */
+     padding-bottom: 10px; /* Jarak ke garis bawah */
+     border-bottom: 1px solid #dee2e6; /* Garis bawah */
+}
+
+/* Wrapper untuk judul & tombol cetak (di dashboard) */
+.section-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 15px;
+}
+.section-header h2 {
+     margin-bottom: 0; 
+     border-bottom: none;
+     padding-bottom: 0;
+}
+.print-btn {
+    background-color: #6c757d; color: white;
+    padding: 8px 15px; text-decoration: none;
+    border-radius: 5px; font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+.print-btn:hover { background-color: #5a6268; }
+
+/* Perbaikan Overlap (yang kita buat) */
+.laporan-kritis {
+    padding-top: 20px; 
+    margin-top: 30px;  
+    clear: both;
+}
+.laporan-kritis h2 {
+    margin-top: 0; 
+}
+hr {
+     margin: 30px 0; border: 0; border-top: 1px solid #eee; clear: both;
+}
+
+/* === 5. NAVIGASI MENU (Tombol-tombol Biru) === */
+.admin-nav ul {
+    list-style: none; /* Hapus titik-titik list */
+    padding: 0; /* Hapus padding default ul */
+    display: flex; /* Buat menu sejajar */
+    gap: 15px; /* Jarak antar tombol menu */
+    flex-wrap: wrap; /* Jika tidak muat, akan turun ke bawah */
+    margin-bottom: 30px; 
+}
+.admin-nav li a {
+    background: #0d6efd; /* Biru */
+    color: white;
+    padding: 12px 18px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: block; /* Agar padding bekerja */
+    transition: background-color 0.2s ease;
+}
+.admin-nav li a:hover {
+    background: #0b5ed7; /* Biru lebih gelap */
+}
+
+/* === 6. STYLING TABEL (Laporan & Daftar) === */
+table {
+    width: 100%; /* Lebar penuh */
+    border-collapse: collapse; /* Garis border jadi satu */
+    margin-top: 20px; 
+    font-size: 1em; 
+}
+th, td {
+    border: 1px solid #dee2e6; /* Garis border tabel */
+    padding: 12px 15px; 
+    text-align: left;
+    vertical-align: middle;
+}
+th { /* Header tabel */
+    background-color: #e9ecef; 
+    font-weight: 600;
+    color: #495057;
+}
+tr:nth-child(even) { /* Baris genap (efek zebra) */
+    background-color: #f8f9fa;
+}
+.stok-kritis { /* Class untuk baris stok kritis */
+    background-color: #fff3cd !important; 
+    color: #856404;
+    font-weight: 500;
+}
+/* === CSS BARU UNTUK SUB BAB TABEL === */
+.sub-bab-header {
+    background-color: #6c757d; /* Warna abu-abu (secondary) */
+    color: white;
+    font-weight: 600; /* Tebal */
+    font-size: 1.1em;
+    text-align: center;
+}
+/* colspan="7" akan membuat padding default hilang, jadi kita tambahkan manual */
+.sub-bab-header td {
+    padding: 10px 15px !important; 
+    text-align: center;
+}
+/* === AKHIR CSS BARU === */
+
+/* === CSS BARU UNTUK BARANG NON-AKTIF === */
+.stok-non-aktif {
+    background-color: #f8f9fa; /* Warna abu-abu sangat muda */
+    color: #adb5bd; /* Warna teks abu-abu */
+}
+.stok-non-aktif td {
+    /* Opsi: tambahkan coretan jika suka */
+    text-decoration: line-through;
+}
+
+.pesan-aman { /* Pesan 'Stok Aman' */
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border: 1px solid #badbcc;
+    padding: 12px 18px;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+.actions { /* Kolom Aksi (Edit/Hapus) */
+     width: 150px;
+     text-align: center;
+}
+
+/* === 7. STYLING TOMBOL (Edit, Hapus, Tambah) === */
+.btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    margin-right: 5px;
+    display: inline-block;
+    font-size: 0.9em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+/* --- TAMBAHKAN/PASTIKAN KODE INI ADA --- */
+.btn-primary { 
+    background-color: #007bff; /* Biru */
+}
+.btn-primary:hover {
+    background-color: #0056b3; 
+}
+.btn-secondary { 
+    background-color: #6c757d; /* Abu-abu */
+}
+.btn-secondary:hover {
+    background-color: #5a6268; 
+}
+/* --- AKHIR TAMBAHAN --- */
+
+.btn-success { background-color: #28a745; }
+.btn-warning { background-color: #ffc107; color: #333; }
+.btn-danger { background-color: #dc3545; }
+.btn-secondary { background-color: #6c757d; }
+
+/* === 8. STYLING FORM (Tambah/Edit) === */
+.form-group {
+    margin-bottom: 18px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #555;
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Agar padding tidak merusak lebar */
+    font-size: 1em;
+}
+.form-group textarea {
+    min-height: 80px; /* Tinggi minimal textarea */
+    resize: vertical; /* Izinkan resize vertikal */
+}
+.form-group small { /* Teks 'Kosongkan password...' */
+    color: #777;
+    font-size: 0.85em;
+}
+.btn-container { /* Wadah tombol Simpan & Batal */
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+}
+.btn-container a.btn { /* Tombol batal (Link) */
+     line-height: 1.5; /* Menyamakan tinggi dengan <button> */
+}
+
+/* === 9. CSS ALERT MELAYANG === */
+.alert-box {
+    position: fixed; top: 20px; left: 50%;
+    transform: translateY(calc(-100% - 20px)) translateX(-50%);
+    width: auto; min-width: 300px;
+    max-width: 90%; background: #fff; border-radius: 6px;
+    padding: 0 15px; z-index: 101; 
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* === TAMBAHAN UNTUK BULK EDIT === */
+.bulk-action-box { 
+    background: #e9ecef; 
+    padding: 15px; 
+    border-radius: 8px; 
+    margin-bottom: 20px; 
+    display: flex; 
+    gap: 15px; 
+    align-items: center; 
+    border: 1px solid #ced4da; 
+}
+.bulk-action-box select { 
+    padding: 8px; 
+    border-radius: 4px; 
+    border: 1px solid #ccc; 
+    flex-grow: 1;
+    max-width: 300px;
+}
+.bulk-btn { 
+    background-color: #ffc107; 
+    color: #212529; 
+    padding: 8px 20px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-weight: 600; 
+}
+.bulk-btn:hover { 
+    background-color: #e0a800; 
+}
+
+.alert-box.show { transform: translateY(0) translateX(-50%); }
+.alert { display: flex; align-items: center; min-height: 60px; padding: 10px 0; font-weight: 500; }
+.alert.success { color: #155724; }
+.alert.error { color: #721c24; }
+.alert i { font-size: 28px; margin-right: 12px; flex-shrink: 0; }
+.alert.success i { color: #198754; }
+.alert.error i { color: #dc3545; }
+.alert::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; animation: progress 5.5s linear forwards; }
+.alert.success::after { background-color: #198754; }
+.alert.error::after { background-color: #dc3545; }
+@keyframes progress { 100% { width: 0; } }
+
