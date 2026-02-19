@@ -216,7 +216,7 @@ Ini sangat membantu user untuk melihat "Apa yang baru saja terjadi?" tanpa harus
             <section class="laporan-stok">
                 <div class="section-header">
                     <h2>Laporan Sisa Stok Saat Ini</h2>
-                    <a href="cetak_sisa_stok.php" target="_blank" class="print-btn">🖨️ Cetak</a>
+                    <a href="cetak_sisa.php" target="_blank" class="print-btn">🖨️ Cetak</a>
                 </div>
                 <table>
                     <thead>
@@ -301,4 +301,5 @@ Ini sangat membantu user untuk melihat "Apa yang baru saja terjadi?" tanpa harus
     </script>
 </body>
 </html>
+
 <?php if(isset($koneksi)) mysqli_close($koneksi); ?>
